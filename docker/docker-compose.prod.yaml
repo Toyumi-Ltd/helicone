@@ -1,0 +1,50 @@
+name: helicone-prod
+
+services:
+  # Cloud SQL Proxy to securely connect to your managed Postgres database
+  cloud-sql-proxy:
+    image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+    command:
+      - "--structured-logs"
+      - "nomi-sim:us-central1:helicone-postgres-db" # Your instance connection name
+    restart: unless-stopped
+
+  # The main backend API service
+  jawn:
+    container_name: helicone-jawn
+    build:
+      context: ../
+      dockerfile: valhalla/dockerfile
+    restart: unless-stopped
+    ports:
+      - "8585:8585"
+    depends_on:
+      - cloud-sql-proxy # Depends on the proxy to be available
+    env_file:
+      - ../.env # Load configuration from the .env file
+
+  # The main frontend web UI
+  web:
+    container_name: helicone-web
+    build:
+      context: ../
+      dockerfile: docker/dockerfiles/dockerfile_web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - jawn
+    env_file:
+      - ../.env
+
+  # The worker service for processing requests
+  worker:
+    container_name: helicone-worker
+    build:
+      context: ../
+      dockerfile: docker/dockerfiles/dockerfile_worker
+    restart: unless-stopped
+    depends_on:
+      - jawn
+    env_file:
+      - ../.env

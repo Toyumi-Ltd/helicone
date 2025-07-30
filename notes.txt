@@ -1,0 +1,40 @@
+Cloud SQL
+instance-ID: helicone-postgres-db
+Database User: postgres
+password: Eik8aivohchah9oo
+region: us-central1
+instance connection name: nomi-sim:us-central1:helicone-postgres-db
+cost estimate: $244.86 / month
+
+
+Redis
+instance-ID: helicone-redis-cache
+Primary Endpoint IP Address: 172.17.240.3
+Port: 6379 (This is the standard port for Redis)
+cost estimate: $35.77/month
+
+
+Cloud Storage
+Bucket Name: helicone-cache
+Bucket Location: us-central1
+
+Clickhouse (Developer)
+username: default
+password: Nc99RAy.OMgtj
+host:https://qekc2owktk.us-central1.gcp.clickhouse.cloud:8443
+port: 9440
+cost estimate: ~$55 / month
+
+
+Confluent Kafka
+topic: helicone-requests
+key: RWAMXK277INL6SRF
+secret: cfltsOm3CmKkzYQdL0/zea3sZFP/kug5vNEch6g6jmydMqvHYoHcN9JTiyPY/f5g
+bootstrap server: pkc-n3603.us-central1.gcp.confluent.cloud:9092
+
+GKE (Final Configuration)
+Type: Zonal
+Location: us-central1-a
+Nodes: 2x e2-standard-4 (autoscaling 2-4)
+Disk: 50GB per node
+Cost Estimate: ~$225 / month
