@@ -10,6 +10,8 @@ COPY package.json yarn.lock ./
 COPY packages/ ./packages/
 COPY worker/package.json ./worker/package.json
 
+# Install wrangler CLI globally, as it's used by the start script
+RUN yarn global add wrangler
 
 # Install all dependencies
 RUN yarn install --frozen-lockfile
