@@ -10,6 +10,7 @@ COPY package.json yarn.lock ./
 COPY packages/ ./packages/
 COPY worker/package.json ./worker/package.json
 
+
 # Install all dependencies
 RUN yarn install --frozen-lockfile
 
